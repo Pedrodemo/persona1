@@ -109,15 +109,33 @@
     // Corazones flotando
     function createHeart() {
       const heart = document.createElement('div');
-      heart.innerHTML = '❤️';
       heart.style.position = 'fixed';
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.bottom = '-40px';
-      heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-      heart.style.opacity = Math.random() * 0.5 + 0.5;
+      // Tamaño entre 180px y 210px (≈5cm)
+      heart.style.width = heart.style.height = (Math.random() * 30 + 180) + 'px';
+      heart.style.opacity = Math.random() * 0.5 + 0.7; // Más claros
       heart.style.pointerEvents = 'none';
       heart.style.transition = 'transform 4s linear, opacity 4s linear';
       heart.style.zIndex = 2;
+
+      if (Math.random() < 0.5) {
+        // Corazón con foto
+        heart.style.background = "url('FOTOS/29.jpg') center/cover, #fff";
+        heart.style.clipPath = "path('M24 4C24 4 18 0 12 4C6 0 0 4 0 12C0 20 12 28 12 28C12 28 24 20 24 12C24 4 24 4 24 4Z')";
+        heart.style.boxShadow = "0 4px 16px 2px #fff7, 0 0 0 4px #fff9"; // Borde blanco suave
+        // Si clip-path no es soportado, puedes usar borderRadius como círculo:
+        // heart.style.borderRadius = '50%';
+      } else {
+        // Corazón emoji
+        heart.style.display = 'flex';
+        heart.style.alignItems = 'center';
+        heart.style.justifyContent = 'center';
+        heart.style.fontSize = '4em'; // Más grande
+        heart.textContent = '❤️';
+        heart.style.background = 'none';
+      }
+
       document.body.appendChild(heart);
 
       setTimeout(() => {
@@ -159,7 +177,11 @@
 
     // Botón sorpresa
     function sorpresa() {
-      alert("¡Te quiero mucho, Ángeles! Sigue brillando siempre 🌟");
+      // Lanza muchos corazones mágicos
+      for (let i = 0; i < 25; i++) {
+        setTimeout(createHeart, i * 80);
+      }
+     // alert("¡Te quiero mucho, Ángeles! Sigue brillando siempre 🌟");
     }
 
     // Intentar reproducir la música automáticamente al cargar la página
