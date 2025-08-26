@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¡Felicidades Ángeles Monserrat!</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe6f0, #e0f7fa);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+      overflow-x: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      color: #d81b60;
+    }
+    p {
+      font-size: 1.5em;
+      margin: 20px 0;
+    }
+    .card {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: inline-block;
+      padding: 30px;
+      max-width: 600px;
+    }
+    .heart {
+      font-size: 2em;
+      color: #f06292;
+    }
+    /* Estrellas/destellos */
+    .star {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #fff9c4;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      box-shadow: 0 0 8px 4px #fffde7;
+      animation: twinkle 2s linear infinite;
+      z-index: 1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Música de fondo -->
+  <audio id="bgmusic" autoplay loop controls>
+    <source src="Hasta La Raíz - Natalia Lafourcade.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <p style="font-size:1em; color:#888;">Si no escuchas la música, haz clic en el botón de play ▶️</p>
+
+  <div class="card">
+    <img id="slideshow" src="FOTOS/1.jpg" alt="Ángeles Monserrat" 
+         style="width:350px; height:350px; object-fit:cover; border-radius:20px; margin:8px; transition:opacity 0.7s;">
+    <div style="margin: 15px;">
+      <button onclick="prevImage()">⏮️ Anterior</button>
+      <button onclick="nextImage()">Siguiente ⏭️</button>
+    </div>
+    <!-- Bloque de felicitación después de las fotos -->
+    <div>
+      <h1>Princesa Ángeles Monserrat,</h1>
+      <p>Hoy cumples 10 años… ¡una década de luz, risas y magia!</p>
+      <p>Has crecido con una chispa única, con ideas que sorprenden, con una imaginación que vuela alto. Cada día contigo es una aventura, una lección, un regalo.</p>
+      <p>Me encanta verte descubrir el mundo con curiosidad, defender tus ideas con fuerza y crear cosas hermosas con tus manos y tu corazón.</p>
+      <p>Que este nuevo año te traiga sueños más grandes, amistades sinceras y momentos que te hagan sentir orgullosa de quién eres.</p>
+      <p>Nunca olvides que eres capaz de todo lo que imagines.</p>
+      <p>Estoy aquí para acompañarte, aplaudirte y abrazarte en cada paso.</p>
+      <p class="heart">❤️ Con todo mi cariño y amor, tu papá ❤️</p>
+      <!-- Botón sorpresa -->
+      <button onclick="sorpresa()" style="margin-top:20px; font-size:1.2em; background:#f06292; color:white; border:none; border-radius:8px; padding:10px 20px; cursor:pointer;">🎁 Haz clic para una sorpresa</button>
+    </div>
+  </div>
+
+  <!-- Corazones flotando -->
+  <div id="hearts-container"></div>
+
+  <script>
+    const total = 29;
+    let actual = 1;
+    function showImage() {
+      const img = document.getElementById('slideshow');
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = `FOTOS/${actual}.jpg`;
+        img.onload = () => { img.style.opacity = 1; };
+      }, 400);
+    }
+    function nextImage() {
+      actual = actual < total ? actual + 1 : 1;
+      showImage();
+    }
+    function prevImage() {
+      actual = actual > 1 ? actual - 1 : total;
+      showImage();
+    }
+    setInterval(nextImage, 3000);
+
+    // Corazones flotando
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '❤️';
+      heart.style.position = 'fixed';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.bottom = '-40px';
+      heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+      heart.style.opacity = Math.random() * 0.5 + 0.5;
+      heart.style.pointerEvents = 'none';
+      heart.style.transition = 'transform 4s linear, opacity 4s linear';
+      heart.style.zIndex = 2;
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.style.transform = `translateY(-110vh)`;
+        heart.style.opacity = 0;
+      }, 100);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
+    }
+    setInterval(createHeart, 700);
+
+    // Estrellas/destellos animados
+    function createStar() {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 2000);
+    }
+    setInterval(createStar, 350);
+
+    // Animación de escritura para el título
+    const mensaje = "Princesa Ángeles Monserrat,";
+    let i = 0;
+    const h1 = document.querySelector('h1');
+    h1.textContent = "";
+    function escribir() {
+      if (i < mensaje.length) {
+        h1.textContent += mensaje.charAt(i);
+        i++;
+        setTimeout(escribir, 80);
+      }
+    }
+    escribir();
+
+    // Botón sorpresa
+    function sorpresa() {
+      alert("¡Te quiero mucho, Ángeles! Sigue brillando siempre 🌟");
+    }
+
+    // Intentar reproducir la música automáticamente al cargar la página
+    window.addEventListener('DOMContentLoaded', function() {
+      const music = document.getElementById('bgmusic');
+      if (music) {
+        music.play().catch(() => {
+          // Si falla, mostrar un mensaje opcional o dejar el botón de play visible
+        });
+      }
+    });
+  </script>
+</body>
+</html>
